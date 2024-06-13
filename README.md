@@ -8,7 +8,7 @@ The following are the steps to set up your machine to run the project
    1. Create a virtual environment
    2. Install the dependencies in the environment.
 
-###Create a virtual environment
+#Create a virtual environment
 
 Open your terminal or command prompt and create a folder or go to a directory you want to save the project using 'cd' command.
 
@@ -58,7 +58,7 @@ deactivate
 ```
 
 
-###Install the dependencies in the environment
+#Install the dependencies in the environment
 
 The project uses Flask, a python web framework for the backend and pyFirmata, to communicate Python with the arduino. Both of the frameworks and the opencv-python library are included in the requirements.txt file. After activating the environment, to install, type the following command.(Do not install these without activating the environment first) 
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function sendCmd(command){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/' + command, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.num !== undefined) {
+                        document.getElementById('counter').innerText = response.num;
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    This is the control page. Where the robot is controlled
+    <input type="button" name="up" onclick="sendCmd('w')" value="Click to count +1">
+    <p>Counter: <span id="counter">{{ num }}</span></p>
+</body>
+</html>

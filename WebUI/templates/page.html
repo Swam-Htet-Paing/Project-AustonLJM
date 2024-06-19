@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <script>
-        function sendCmd(command){
+        function sendCmd(command) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/' + command, true);
             xhr.onreadystatechange = function () {
@@ -19,10 +20,70 @@
             xhr.send();
         }
     </script>
+    <style>
+    	body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .center{
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        img{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .box{
+            display: inline-block;
+            border-radius: 15px;
+            background-color: grey;
+            width: 230px;
+            padding: 10px;
+            margin: 30px;
+        }
+        .align{
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    This is the control page. Where the robot is controlled
-    <input type="button" name="up" onclick="sendCmd('w')" value="Click to count +1">
-    <p>Counter: <span id="counter">{{ num }}</span></p>
+    <h1 class="center" style="font-size: 60px">My IoT</h1>
+    <div class="center align">
+        <img class="box" style="" src="{{ url_for('video_feed') }}" alt="Camera Feed" width="{{ video_width }}" height="{{ video_height }}">
+    
+        <div class="slidebar box">
+            <input type="range" min="1" max="180" value="50" class="slider" id="myrange" name="slider_value">
+            <p style="color: white; font-weight: bold; font-size: 22px;">Servo angle Value: <span id="demo"></span></p>
+        </div>
+    </div>
+    <script>
+        var slider = document.getElementById("myrange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+
+        document.getElementById('myrange').addEventListener('input', function() {
+            const slidervalue = this.value;
+            fetch('/get_slider_value', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ slider_value: slidervalue }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("result").innerText = data;
+            });
+        });
+    </script>
 </body>
 </html>
+

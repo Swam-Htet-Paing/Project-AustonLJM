@@ -2,11 +2,11 @@ from flask import render_template, Flask,  request, Response
 import cv2
 import serial #python3 -m serial.tools.list_ports
 
-#ser = serial.Serial('THE ARDUINO PORT GOES HERE')
+#ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
 
 app = Flask(__name__)
 
-#def sendCmd(command):
+# def sendCmd(command):
 #    ser.write(command.encode('utf-8'))
 
 def gen_frames():

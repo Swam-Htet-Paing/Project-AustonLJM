@@ -2,3 +2,4 @@ flask
 pyFirmata
 opencv-python
 pyserial
+ultralytics

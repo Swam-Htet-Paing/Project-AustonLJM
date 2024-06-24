@@ -22,7 +22,7 @@ while True:
         classes_names = result.names
 
         for box in result.boxes:
-            if box.conf[0] > 0.4:
+            if box.conf[0] > 0.1:
                 [x1,x2, y1,y2] = box.xyxy[0]
                 x1,y1,x2,y2 = int(x1), int(y1), int(x2), int(y2)
                 cls = int(box.cls[0])

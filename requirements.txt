@@ -3,3 +3,8 @@ pyFirmata
 opencv-python
 pyserial
 ultralytics
+torch
+trochvision
+opencv-python-headless
+pyyaml>=5.3
+matplotlib

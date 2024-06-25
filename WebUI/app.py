@@ -13,7 +13,7 @@ app = Flask(__name__)
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 label = "Hi"
 def gen_frames():
-  cap = cv2.VideoCapture(1)
+  cap = cv2.VideoCapture(0)
   while True:
     success, frame = cap.read()
     if not success:

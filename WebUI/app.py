@@ -13,7 +13,7 @@ app = Flask(__name__)
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 label = "Hi"
 def gen_frames():
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(1)
   while True:
     success, frame = cap.read()
     if not success:
@@ -41,12 +41,15 @@ def index():
     global label
     return render_template('page.html', msg=label)
 
-@app.route("/get_response", methods=['GET'])
-def get_response():
-    global label
-    result = ol.chat(model="tinyllama", messages=[{"role": "user", "content": label}])  
-    response = result["message"]["content"]
-    return jsonify({"counter": response})
+@app.route('/<command>', methods=['POST'])
+def handle_command(command):
+    # Handle the command here (e.g., print it)
+    if command == 'i':
+        result = ol.chat(model="tinyllama", messages=[{ "role": "user", "content": "Hi"}])
+        response = result["message"]["content"]
+        print(response)
+    print(f"Received command: {command}")
+    return f"Command '{command}' received!"
     
 @app.route('/video_feed/')
 def video_feed():

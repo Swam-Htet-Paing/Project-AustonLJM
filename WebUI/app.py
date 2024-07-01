@@ -1,17 +1,27 @@
-from flask import render_template, Flask,  request, Response, jsonify
+from flask import render_template, Flask,  request, Response, jsonify, session
 import cv2
 import serial #python3 -m serial.tools.list_ports
 import torch
 from yolov5 import detect
 import ollama as ol
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
+import re
 
 #ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
 # def sendCmd(command):
 #    ser.write(command.encode('utf-8'))
 
 app = Flask(__name__)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'swam'
+app.config['MYSQL_PASSWORD'] = 'swam123'
+app.config['MYSQL_DB'] = 'iotDB1'
+
+mysql = MySQL(app)
+
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-label = "Hi"
+
 def gen_frames():
   cap = cv2.VideoCapture(1)
   while True:
@@ -37,9 +47,22 @@ def gen_frames():
            b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
            
 @app.route("/")
-def index():
-    global label
-    return render_template('page.html', msg=label)
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+       username = request.form['username']
+       password = request.form['password']
+       cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+       cursor.execute('SELECT * FROM users WHERE username = % s AND password = % s', (username, password, ))
+       account = cursor.fetchone()
+       if account:
+          session['loggedin'] = True
+          session['username'] = account['username']
+          msg = 'Logged in successfully!'
+       else:
+          msg = "Incorrect password or username"
+    return render_template('login.html', msg=msg)
 
 @app.route('/<command>', methods=['POST'])
 def handle_command(command):
@@ -55,11 +78,9 @@ def handle_command(command):
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
     
-@app.route('/get_slider_value', methods=['POST'])
-def get_slider_value():
-    slider_value = request.json.get('slider_value')
-#    sendCmd(slider_value)
-    return slider_value
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+   pass
     
 if __name__ == '__main__':
    app.run()

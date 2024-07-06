@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Page</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <script src="https://kit.fontawesome.com/bb17e47804.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 class="center">Control Page</h1>
+    <div id="left-right-buttons">
+        <button id="left"><i class="fa-solid fa-caret-left"></i></button>
+        <div id="up-down-buttons">
+            <button id="up"><i class="fa-solid fa-caret-up"></i></button>
+            <div class="box" style="width: 560px; height: 480px;">
+                <img id="img" src="{{ url_for('video_feed')}}" alt="Camera Feed" width="560px" height="480px">
+            </div>
+            <button id="down"><i class="fa-solid fa-caret-down"></i></button>
+        </div>
+        <button id="right"><i class="fa-solid fa-caret-right"></i></button>
+    </div>
+    
+    <div style="display: flex; flex-direction: row;">
+        <button id="on-off">Camera on/off</button>
+        <button id="light">Light On/Off</button>
+        <img id="led" src="../static/media/off.png" width="30px" height="30px">
+    </div>
+    <script>
+        const button = document.getElementById('on-off');
+        const img = document.getElementById('img');
+        const led_switch = document.getElementById('light');
+        const bulb = document.getElementById('led');
+        let cameraOn = true;
+        let isBright = true;
+        button.addEventListener('click', () => {
+            cameraOn = !cameraOn;
+            if (cameraOn){   
+                img.src = '{{ url_for('video_feed')}}';
+            }
+            else{
+                img.src = '../static/media/black.png';
+            }
+        });
+
+        led_switch.addEventListener('click', () => {
+            isBright = !isBright;
+            if (isBright){
+                bulb.src = '../static/media/off.png';
+            }
+            else{
+                bulb.src = '../static/media/on.png';
+            }
+        })
+    </script>        
+    <script src="../static/js/send.js"></script>
+</body>
+</html>

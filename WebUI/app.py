@@ -51,36 +51,45 @@ def gen_frames():
 def login():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE username = % s AND password = % s', (username, password, ))
+        account = cursor.fetchone()
+        if account:
+            return render_template('move.html')
+        else:
+            msg = "Incorrect password or username"
+    return render_template('login.html', msg=msg)
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    msg = ''
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
        username = request.form['username']
        password = request.form['password']
        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-       cursor.execute('SELECT * FROM users WHERE username = % s AND password = % s', (username, password, ))
+       cursor.execute('SELECT * FROM users WHERE username = % s', (username, ))
        account = cursor.fetchone()
+       
        if account:
-          session['loggedin'] = True
-          session['username'] = account['username']
-          msg = 'Logged in successfully!'
+          msg = 'Account with the name % s already exists', username
+       
        else:
-          msg = "Incorrect password or username"
-    return render_template('login.html', msg=msg)
+          cursor.execute('INSERT INTO users (username, password) VALUES (% s, % s)', (username, password, ))
+          mysql.connection.commit()
+          msg = 'Registration Completed!'
+          return render_template('login.html', msg=msg)       
+    return render_template('register.html', msg=msg)
 
 @app.route('/<command>', methods=['POST'])
 def handle_command(command):
-    # Handle the command here (e.g., print it)
-    if command == 'i':
-        result = ol.chat(model="tinyllama", messages=[{ "role": "user", "content": "Hi"}])
-        response = result["message"]["content"]
-        print(response)
     print(f"Received command: {command}")
     return f"Command '{command}' received!"
     
 @app.route('/video_feed/')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    
-@app.route('/register', methods=['POST', 'GET'])
-def register():
-   pass
     
 if __name__ == '__main__':
    app.run()

@@ -42,16 +42,29 @@
                 img.src = '../static/media/black.png';
             }
         });
-
+        function sendCmd(command) {
+    fetch('/' + command, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ command: command })
+    }).then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+}
         led_switch.addEventListener('click', () => {
-            isBright = !isBright;
             if (isBright){
-                bulb.src = '../static/media/off.png';
+            
+                bulb.src = '../static/media/on.png';
+                sendCmd('p');
             }
             else{
-                bulb.src = '../static/media/on.png';
+                bulb.src = '../static/media/off.png';
+                sendCmd('o');
             }
-        })
+            isBright = !isBright;
+        });
     </script>        
     <script src="../static/js/send.js"></script>
 </body>

@@ -9,22 +9,18 @@ void setup() {
   pinMode(11,OUTPUT);
   pinMode(7,OUTPUT);
   pinMode(8,OUTPUT);
-  pinMode(2,OUTPUT);
+  pinMode(13,OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   if(Serial.available() > 0){
-    String msg = Serial.readString();
-    if(msg == 's')
-      drive_motors(255.0);
-    else if(msg == 'w')
-      drive_motors_backwards(255.0);
+    char msg = Serial.read();
+    if(msg == 'p')
+      digitalWrite(13,HIGH);
     else if(msg == 'o')
-      digitalWrite(2,HIGH);
-    else if(msg == 'p')
-      digitalWrite(2,LOW);  
+      digitalWrite(13,LOW);  
   }
 }
 
@@ -44,4 +40,4 @@ void drive_motors(double val){
   analogWrite(11,val);
   digitalWrite(7,HIGH);
   digitalWrite(8,LOW);
-}
+  }

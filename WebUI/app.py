@@ -8,9 +8,9 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 
-#ser = serial.Serial('/dev/ttyUSB0', baudrate=9600)
-# def sendCmd(command):
-#    ser.write(command.encode('utf-8'))
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600)
+def sendCmd(command):
+   ser.write(command.encode('utf-8'))
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
@@ -85,6 +85,7 @@ def register():
 @app.route('/<command>', methods=['POST'])
 def handle_command(command):
     print(f"Received command: {command}")
+    sendCmd(command)
     return f"Command '{command}' received!"
     
 @app.route('/video_feed/')

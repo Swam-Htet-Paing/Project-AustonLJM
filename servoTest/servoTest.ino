@@ -12,5 +12,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   int angle = map(analogRead(A0), 0,1023, 0,180);
-  myservo.write(angle);
+//  myservo.write(35);
+//  delay(2000);
+  myservo.write(0);
+  //delay(2000);
 }

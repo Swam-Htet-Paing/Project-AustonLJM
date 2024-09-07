@@ -4,28 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control Page</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/control.css">
     <script src="https://kit.fontawesome.com/bb17e47804.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1 class="center">Control Page</h1>
-    <div id="left-right-buttons">
-        <button id="left"><i class="fa-solid fa-caret-left"></i></button>
-        <div id="up-down-buttons">
-            <button id="up"><i class="fa-solid fa-caret-up"></i></button>
-            <div class="box" style="width: 560px; height: 480px;">
-                <img id="img" src="{{ url_for('video_feed')}}" alt="Camera Feed" width="560px" height="480px">
+    <h1 class="center">Secure Bot (Front Panel)</h1>
+            <div class="box">
+                <img id="img" class="imgcenter" src="{{ url_for('video_feed')}}" alt="Camera Feed">
             </div>
-            <button id="down"><i class="fa-solid fa-caret-down"></i></button>
+    <div class="row">   
+        <div class="col">
+            Driving Control
+            <button class="control" id="up"><i class="fa-solid fa-caret-up"></i></button>
+            <div class="row">
+                <button class="control" id="left"><i class="fa-solid fa-caret-left"></i></button>
+                <button class="control" id="stop"><i>stop</i></button>
+                <button class="control" id="right"><i class="fa-solid fa-caret-right"></i></button>
+            </div>
+            <button class="control" id="down"><i class="fa-solid fa-caret-down"></i></button>
         </div>
-        <button id="right"><i class="fa-solid fa-caret-right"></i></button>
+        <div class="col">
+            Camera Control
+            <button class="control" id="tilt-U"><i class="fa-solid fa-caret-up"></i></button>
+            <div class="row">
+                <button class="control" id="pan-L"><i class="fa-solid fa-caret-left"></i></button>
+                <button class="control" id="reset"><i>reset</i></button>
+                <button class="control" id="pan-R"><i class="fa-solid fa-caret-right"></i></button>
+            </div>
+            <button class="control" id="tilt-D"><i class="fa-solid fa-caret-down"></i></button>
+        </div>
     </div>
-    
-    <div style="display: flex; flex-direction: row;">
-        <button id="on-off">Camera on/off</button>
-        <button id="light">Light On/Off</button>
-        <img id="led" src="../static/media/off.png" width="30px" height="30px">
+    <div class="row">
+        <button class="IO" id="on-off" style="margin: 15px;">Camera on/off</button>
+        <button class="IO" id="light" style="margin: 15px;">Light On/Off</button>
+        <img id="led" src="../static/media/off.png">
     </div>
+
     <script>
         const button = document.getElementById('on-off');
         const img = document.getElementById('img');

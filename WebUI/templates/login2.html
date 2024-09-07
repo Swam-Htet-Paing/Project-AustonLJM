@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://kit.fontawesome.com/bb17e47804.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/loginstyle.css">
+    <link rel="icon" href="">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form_box">
+            <div class="form-header">
+                <span>Login</span>
+            </div>
+            <div class="error_message" id="error-message">
+                 <p style="color:red; font-size: 18px;">{{ msg }}</p> 
+            </div>
+            <form action="{{ url_for('login')}}" method="POST">
+                <div class="input_box">
+                    <input type="text" name="username" id="user" class="input-field" required minlength="3" autocomplete="off">
+                    <label for="user" class="label">Username</label>
+                    <i class="fa-regular fa-user icon"></i>
+                </div>
+                <div class="input_box">
+                    <input type="password" name="password" id="form-pass" class="input-field" required minlength="3" autocomplete="off">
+                    <label for="password" class="label">Password</label>
+                    <i class="fa-solid fa-eye-slash form_eye icon" id="form_eye"></i>
+                </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot">
+                        <a href="forgotpw.php">Forgot password?</a>
+                    </div>
+                </div>
+                <div class="input_box">
+                    <input type="submit" class="input-submit" value="Login">
+                </div>
+                <div class="register">
+                    <span>Not a member? <a href="{{ url_for('register') }}">Register</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="../static/js/loginJS.js"></script>
+</body>
+</html>

@@ -8,4 +8,4 @@ trochvision
 opencv-python-headless
 pyyaml>=5.3
 matplotlib
-flask_mysqldb
+

@@ -1,4 +1,4 @@
-let movingInterval = null;
+let movingInterval = 100;
 
 function sendCommand(command) {
     fetch('/' + command, {
@@ -13,7 +13,7 @@ function sendCommand(command) {
 }
 
 document.addEventListener("keydown", event => {
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(event.code)) {
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyX', 'KeyR','KeyI', 'KeyJ', 'KeyK', 'KeyL'].includes(event.code)) {
         switch (event.code) {
             case "ArrowUp":
             case "KeyW":
@@ -31,7 +31,25 @@ document.addEventListener("keydown", event => {
             case "KeyD":
                 sendCommand('d');
                 break;
-        }
+            case "KeyX":
+                sendCommand('x');
+                break;
+            case "KeyR":
+                sendCommand('r');
+                break;
+            case "KeyI":
+                sendCommand('i');
+                break;
+            case "KeyJ":
+                sendCommand('j');
+                break;
+            case "KeyK":
+                sendCommand('k');
+                break;
+            case "KeyL":
+                sendCommand('l');
+                break;
+            }
     }
 });
 
@@ -51,8 +69,25 @@ function startMoving(direction) {
             case 'right':
                 sendCommand('d');
                 break;
+            case 'reset':
+                sendCommand('r');
+                break;
+            case 'stop':
+                sendCommand('x');
+                break;
+            case 'pan-R':
+                sendCommand('l');
+                break;
+            case 'pan-L':
+                sendCommand('j');
+                break;
+            case 'tilt-U':
+                sendCommand('i');
+                break;
+            case 'tilt-D':
+                sendCommand('k');
+                break;        
         }
-        updatePosition();
     }, 30);
 }
 
@@ -60,7 +95,7 @@ function stopMoving() {
     clearInterval(movingInterval);
 }
 
-const buttons = ["up", "down", "left", "right"];
+const buttons = ["up", "down", "left", "right", "stop", "reset", "pan-L", "pan-R", "tilt-U", "tilt-D"];
 buttons.forEach(direction => {
     document.getElementById(direction).addEventListener("mousedown", () => startMoving(direction));
     document.getElementById(direction).addEventListener("touchstart", (event) => {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://kit.fontawesome.com/bb17e47804.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/loginstyle.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form_box">
+            <div class="form-header">
+                <span>Register</span>
+            </div>
+            <div class="error_message" id="error-message" style="display: none;">
+                <p style="color: rgb(238, 28, 28); font-weight: bold;"></p>
+            </div>
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="input_box">
+                    <input type="text" name="username" class="input-field" required minlength="3" autocomplete="off">
+                    <label for="username" class="label">Username</label>
+                    <i class="fa-regular fa-user icon"></i>
+                </div>
+                <div class="input_box">
+                    <input type="email" name="email" class="input-field" required minlength="3" autocomplete="off">
+                    <label for="email" class="label">Email</label>
+                    <i class="fa-regular fa-envelope icon"></i>
+                </div>
+                <div class="input_box">
+                    <input type="password" id="form-pass" name="password" class="input-field" required autocomplete="off">
+                    <label for="password" class="label">Password</label>
+                    <i class="fa-solid fa-eye-slash form_eye icon" id="form_eye"></i>
+                </div>
+                <div class="input_box">
+                    <input type="submit" class="input-submit" value="Create Account">
+                </div>
+                <div class="register">
+                    <span>Already a member? <a href="login.php">Login</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="../static/js/loginJS.js"></script>
+</body>
+</html>

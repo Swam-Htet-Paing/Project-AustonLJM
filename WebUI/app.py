@@ -5,11 +5,12 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from ultralytics import YOLO
 import serial
+import os
 
 # Place /your/serial/port with your arduino usb or bluetooth connection serial port number 
-ser = serial.Serial('/your/serial/port', baudrate=9600)
-def sendCmd(command):
-   ser.write(command.encode('utf-8'))
+# ser = serial.Serial('/your/serial/port', baudrate=9600)
+# def sendCmd(command):
+#    ser.write(command.encode('utf-8'))
 
 #Sends command to esp8266 if presents
 def send(command):
@@ -24,9 +25,9 @@ app = Flask(__name__)
 
 #Database access credentials
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'swam'
-app.config['MYSQL_PASSWORD'] = 'swam123'
-app.config['MYSQL_DB'] = 'iotDB1'
+app.config['MYSQL_USER'] = os.getenv('DB_UNAME')
+app.config['MYSQL_PASSWORD'] = os.getenv('DB_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('DB_NAME')
 global_password = 'hellouser'
 
 #MySQL Object started, ESP8266 address and port number it comes from are decleared, Trained uniform detection model is loaded
